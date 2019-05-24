@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="size_10">10dp</dimen>
+    <dimen name="font_15">15sp</dimen>
+    <integer name="_1">1</integer>
+</resources>
