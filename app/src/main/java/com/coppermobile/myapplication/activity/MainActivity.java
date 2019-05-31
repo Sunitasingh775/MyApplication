@@ -29,8 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
         binding.etSearchRepo.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                String s = binding.etSearchRepo.getText().toString();
-                if (s.length() > 0) repoViewModel.searchRepos(s);
+                repoViewModel.searchRepos(binding.etSearchRepo.getText().toString());
                 return true;
             }
             return false;

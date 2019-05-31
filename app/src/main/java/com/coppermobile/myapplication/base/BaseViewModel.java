@@ -12,13 +12,13 @@ import io.reactivex.disposables.Disposable;
 public abstract class BaseViewModel extends ViewModel {
 
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
-    private MediatorLiveData<SingleEvent<StringResException>> errorMessage = new MediatorLiveData<>();
+    private MediatorLiveData<SingleEvent<StringResEx>> errorMessage = new MediatorLiveData<>();
 
     protected CompositeDisposable getCompositeDisposable() {
         return compositeDisposable;
     }
 
-    public LiveData<SingleEvent<StringResException>> getErrorMessage() {
+    public LiveData<SingleEvent<StringResEx>> getErrorMessage() {
         return errorMessage;
     }
 
@@ -26,7 +26,7 @@ public abstract class BaseViewModel extends ViewModel {
         compositeDisposable.add(disposable);
     }
 
-    protected void setError(StringResException error) {
+    protected void setError(StringResEx error) {
         errorMessage.postValue(new SingleEvent<>(error));
     }
 
@@ -36,11 +36,11 @@ public abstract class BaseViewModel extends ViewModel {
         compositeDisposable.clear();
     }
 
-    public class StringResException extends Exception {
+    public class StringResEx extends Throwable {
 
         private final String messageString;
 
-        StringResException(String messageString) {
+        StringResEx(String messageString) {
             this.messageString = messageString;
         }
 

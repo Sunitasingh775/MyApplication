@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -18,6 +19,10 @@ public class GitHubClient {
         if (gitHubApi == null) {
             OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
             httpClient.retryOnConnectionFailure(true);
+
+            HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            httpClient.addNetworkInterceptor(loggingInterceptor);
 
             Gson gson = new GsonBuilder()
                     .setLenient()

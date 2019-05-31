@@ -1,12 +1,12 @@
 package com.coppermobile.myapplication.base;
 
-import android.app.Application;
+import dagger.android.AndroidInjector;
+import dagger.android.DaggerApplication;
 
-public class BaseApplication extends Application {
-// extends DaggerApplication {
-//
-//    @Override
-//    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
-//        return null;
-//    }
+public class BaseApplication extends DaggerApplication {
+
+    @Override
+    protected AndroidInjector<? extends BaseApplication> applicationInjector() {
+        return DaggerAppComponent.builder().create(this);
+    }
 }

@@ -31,6 +31,9 @@ public class SearchResponse implements Serializable {
         return items;
     }
 
+    public SearchResponse() {
+    }
+
     public SearchResponse(@NonNull Integer totalCount, @NonNull List<RepoNameResponse> repoNameResponseList) {
         this.totalCount = totalCount;
         this.items = repoNameResponseList;

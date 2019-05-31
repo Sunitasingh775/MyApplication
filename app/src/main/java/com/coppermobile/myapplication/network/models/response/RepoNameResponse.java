@@ -13,6 +13,9 @@ public class RepoNameResponse {
         return fullName;
     }
 
+    public RepoNameResponse() {
+    }
+
     public RepoNameResponse(@NonNull String fullName) {
         this.fullName = fullName;
     }

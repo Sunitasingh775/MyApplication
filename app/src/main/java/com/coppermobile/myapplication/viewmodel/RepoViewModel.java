@@ -30,26 +30,29 @@ public class RepoViewModel extends BaseViewModel {
         // The network request might be handled in a different thread so make sure Espresso knows
         // that the app is busy until the response is handled.
         EspressoIdlingResource.increment(); // App is busy until further notice
-        visibility.set(View.VISIBLE);
 
-        getCompositeDisposable().add(githubRepository.searchRepos(searchedText)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(searchResponse -> {
-                    // now that the data has been loaded, we can mark the app as idle
-                    // first, make sure the app is still marked as busy then decrement, there might be cases
-                    // when other components finished their asynchronous tasks and marked the app as idle
-                    if (!EspressoIdlingResource.getIdlingResource().isIdleNow()) {
-                        EspressoIdlingResource.decrement(); // Set app as idle.
-                    }
+        if (searchedText.length() > 0) {
+            visibility.set(View.VISIBLE);
 
-                    mutableLiveData.setValue(searchResponse);
-                    count.set(searchResponse.getTotalCount());
-                    visibility.set(View.GONE);
-                }, throwable -> {
-                    setError((StringResException) throwable);
-                    visibility.set(View.GONE);
-                }));
+            getCompositeDisposable().add(githubRepository.searchRepos(searchedText)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(searchResponse -> {
+                        // now that the data has been loaded, we can mark the app as idle
+                        // first, make sure the app is still marked as busy then decrement, there might be cases
+                        // when other components finished their asynchronous tasks and marked the app as idle
+                        if (!EspressoIdlingResource.getIdlingResource().isIdleNow()) {
+                            EspressoIdlingResource.decrement(); // Set app as idle.
+                        }
+
+                        mutableLiveData.setValue(searchResponse);
+                        count.set(searchResponse.getTotalCount());
+                        visibility.set(View.GONE);
+                    }, throwable -> {
+                        setError((StringResEx) throwable);
+                        visibility.set(View.GONE);
+                    }));
+        }
     }
 
     public LiveData<SearchResponse> getSearchResponse() {
